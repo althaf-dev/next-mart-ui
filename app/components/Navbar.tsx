@@ -10,6 +10,7 @@ function Navbar() {
   return (
     <div className="border-1 border-blue-100 bg-blue-800 text-white flex gap-4 p-2">
       <Link href={"/"}>Home</Link>
+      <Link href={"/products"}>Products</Link>
       <Link onClick={handleBlogClick} href={"/blog"}>
         Blog
       </Link>

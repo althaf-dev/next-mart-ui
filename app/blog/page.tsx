@@ -1,6 +1,6 @@
 import React from "react";
 import { SanityClient } from "../lib/sanity";
-import Card from "../components/Card";
+import BlogCard from "../components/BlogCard";
 
 async function page() {
   const data = await SanityClient.fetch(`*[_type == "post"]{
@@ -14,7 +14,7 @@ async function page() {
       this is blog page
       <div className="flex flex-wrap flex-row gap-4 mx-8 justify-center ">
         {data?.map((item: any) => (
-          <Card key={item.title} title={item.title} extract={item.excerpt} featImage={item.featimageUrl} />
+          <BlogCard key={item.title} title={item.title} extract={item.excerpt} featImage={item.featimageUrl} />
         ))}
       </div>
     </div>
