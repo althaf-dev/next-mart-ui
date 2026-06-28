@@ -1,11 +1,13 @@
 "use client";
 import React, { useContext } from "react";
+import Button from "./Button";
 
 export interface CardProps {
   title: string;
   extract?: string;
   featImage: string;
   children?: React.ReactNode;
+  buttonText?: string;
 }
 
 const CardContext = React.createContext<CardProps>({
@@ -15,14 +17,22 @@ const CardContext = React.createContext<CardProps>({
 
 function Card({
   children,
-  card
+  card,
 }: {
   children: React.ReactNode;
   card: CardProps;
 }) {
   return (
     <CardContext.Provider value={card}>
-      <div className="border border-blue-100 m-2 p-0 rounded w-1/4 flex flex-col gap-4 pb-2 justify-between">
+      <div
+        onMouseEnter={() => {
+          window.gtag("event", "view_item", {
+            product_id: "WM001",
+            product_name: card.title,
+          });
+        }}
+        className="border border-blue-100 m-2 p-0 rounded w-1/4 flex flex-col gap-4 pb-2 justify-between"
+      >
         {children}
       </div>
     </CardContext.Provider>
@@ -33,7 +43,7 @@ function Title() {
   const card = useContext(CardContext);
   const handleButtonCLick = () => {
     window.gtag("event", "block_read", {
-      title:card.title,
+      title: card.title,
       category: "cms",
     });
   };
@@ -62,25 +72,6 @@ function Image() {
 function Excerpt() {
   const card = useContext(CardContext);
   return <p className="p-2">{card.extract}</p>;
-}
-
-function Button({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`
-      border p-2 border-blue-200 rounded m-2 cursor-pointer 
-      hover:bg-blue-400 hover:text-white`}
-    >
-      {children}
-    </button>
-  );
 }
 
 Card.Title = Title;
